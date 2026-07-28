@@ -1,48 +1,112 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --brand-50: #ecfeff;
-  --brand-100: #cffafe;
-  --brand-500: #0ea5e9;
-  --brand-600: #0284c7;
-  --brand-700: #0369a1;
-  --accent-500: #f59e0b;
-  --accent-600: #d97706;
-  --surface-dark: #0b1220;
+  --background: #eef1f6;
+  --foreground: #101828;
+
+  --ink-950: #0a1322;
+  --ink-900: #0f1e33;
+  --ink-800: #17293f;
+  --ink-700: #223752;
+
+  --paper: #ffffff;
+  --paper-muted: #eef1f6;
+  --line: #dde2ea;
+
+  --brass-700: #7c5e21;
+  --brass-600: #a3792c;
+  --brass-500: #b98f3f;
+  --brass-300: #dcc17f;
+  --brass-100: #f0e4c8;
+
+  --muted: #5c6472;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-50: var(--brand-50);
-  --color-brand-100: var(--brand-100);
-  --color-brand-500: var(--brand-500);
-  --color-brand-600: var(--brand-600);
-  --color-brand-700: var(--brand-700);
-  --color-accent-500: var(--accent-500);
-  --color-accent-600: var(--accent-600);
-  --color-surface-dark: var(--surface-dark);
+
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-800: var(--ink-800);
+  --color-ink-700: var(--ink-700);
+
+  --color-paper: var(--paper);
+  --color-paper-muted: var(--paper-muted);
+  --color-line: var(--line);
+
+  --color-brass-700: var(--brass-700);
+  --color-brass-600: var(--brass-600);
+  --color-brass-500: var(--brass-500);
+  --color-brass-300: var(--brass-300);
+  --color-brass-100: var(--brass-100);
+
+  --color-muted: var(--muted);
+
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
+  --font-mono: var(--font-mono);
 }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(1200px 350px at 90% -5%, rgba(14, 165, 233, 0.09), transparent 60%),
-    linear-gradient(180deg, #ffffff, #f8fafc 18%, #f8fafc);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
 }
 
 .font-heading {
-  font-family: var(--font-heading), sans-serif;
+  font-family: var(--font-heading), serif;
+  font-feature-settings: "ss01" 1;
 }
 
-.hero-sheen {
-  background:
-    radial-gradient(90% 120% at 0% 0%, #1e293b, #0b1220 62%),
-    linear-gradient(110deg, rgba(14, 165, 233, 0.16), rgba(245, 158, 11, 0.16));
+.font-mono-tab {
+  font-family: var(--font-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Hero: encre marine, fine trame de lignes evoquant une grille de comparatif, pas de degrade criard */
+.hero-ledger {
+  position: relative;
+  background: var(--ink-950);
+  overflow: hidden;
+}
+.hero-ledger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    rgba(185, 143, 63, 0.06) 0px,
+    rgba(185, 143, 63, 0.06) 1px,
+    transparent 1px,
+    transparent 64px
+  );
+  pointer-events: none;
+}
+.hero-ledger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(700px 260px at 85% 0%, rgba(185, 143, 63, 0.14), transparent 65%);
+  pointer-events: none;
+}
+
+/* Signature : ticket de prix - trait pointille + repere losange laiton */
+.price-ticket {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 0.65rem;
+  margin-top: 0.15rem;
+}
+.price-ticket .stamp {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+  background: var(--brass-600);
+  margin-bottom: 2px;
 }

@@ -1,17 +1,25 @@
 import type { Metadata } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Fraunces, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 
-const bodyFont = Manrope({
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
 });
 
-const headingFont = Sora({
+const headingFont = Fraunces({
   variable: "--font-heading",
   subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+});
+
+const monoFont = IBM_Plex_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -25,8 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html
+      lang="fr"
+      className={`${bodyFont.variable} ${headingFont.variable} ${monoFont.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
