@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --brand-50: #ecfeff;
+  --brand-100: #cffafe;
+  --brand-500: #0ea5e9;
+  --brand-600: #0284c7;
+  --brand-700: #0369a1;
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --surface-dark: #0b1220;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-surface-dark: var(--surface-dark);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 350px at 90% -5%, rgba(14, 165, 233, 0.09), transparent 60%),
+    linear-gradient(180deg, #ffffff, #f8fafc 18%, #f8fafc);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+.font-heading {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.hero-sheen {
+  background:
+    radial-gradient(90% 120% at 0% 0%, #1e293b, #0b1220 62%),
+    linear-gradient(110deg, rgba(14, 165, 233, 0.16), rgba(245, 158, 11, 0.16));
+}

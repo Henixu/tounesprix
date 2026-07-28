@@ -1,0 +1,73 @@
+export const categories = [
+  "PC portables",
+  "PC Gamer",
+  "Smartphones",
+  "Tablettes",
+  "Smart TV",
+  "Moniteurs",
+  "Cartes graphiques",
+  "SSD",
+  "RAM",
+  "Claviers",
+  "Souris",
+  "Casques Gaming",
+];
+
+export const featuredProducts = [
+  {
+    id: 1,
+    name: "ASUS TUF Gaming F15 i7 13e Gen RTX 4060",
+    brand: "ASUS",
+    lowestPrice: "4 299 TND",
+    store: "Mytek",
+  },
+  {
+    id: 2,
+    name: "Lenovo Legion 5 Ryzen 7 RTX 4070",
+    brand: "Lenovo",
+    lowestPrice: "5 199 TND",
+    store: "SBS Informatique",
+  },
+  {
+    id: 3,
+    name: "Samsung Galaxy S25 256 Go",
+    brand: "Samsung",
+    lowestPrice: "3 249 TND",
+    store: "Tunisianet",
+  },
+  {
+    id: 4,
+    name: "Xiaomi Pad 7 Pro 12.1 pouces",
+    brand: "Xiaomi",
+    lowestPrice: "1 689 TND",
+    store: "Spacenet",
+  },
+  {
+    id: 5,
+    name: "LG UltraGear 27\" QHD 165Hz",
+    brand: "LG",
+    lowestPrice: "1 179 TND",
+    store: "Mega-PC",
+  },
+  {
+    id: 6,
+    name: "MSI GeForce RTX 5070 12 Go",
+    brand: "MSI",
+    lowestPrice: "2 899 TND",
+    store: "Wiki",
+  },
+  {
+    id: 7,
+    name: "Kingston NV3 SSD 1To NVMe",
+    brand: "Kingston",
+    lowestPrice: "249 TND",
+    store: "Mytek",
+  },
+  {
+    id: 8,
+    name: "Corsair Vengeance 32 Go DDR5",
+    brand: "Corsair",
+    lowestPrice: "389 TND",
+    store: "SBS Informatique",
+  },
+];
