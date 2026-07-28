@@ -7,9 +7,9 @@ type BadgeProps = HTMLAttributes<HTMLSpanElement> & {
 };
 
 const variantClasses: Record<BadgeVariant, string> = {
-  primary: "bg-brand-100 text-brand-700",
-  accent: "bg-amber-100 text-amber-700",
-  neutral: "bg-slate-100 text-slate-700",
+  primary: "bg-brass-100 text-brass-700",
+  accent: "bg-ink-900 text-brass-300",
+  neutral: "bg-paper-muted text-ink-700",
 };
 
 export function Badge({ className = "", variant = "neutral", ...props }: BadgeProps) {
