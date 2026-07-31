@@ -1,0 +1,29 @@
+const cors = require("cors");
+const express = require("express");
+const morgan = require("morgan");
+
+const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
+const storeRoutes = require("./routes/storeRoutes");
+const priceRoutes = require("./routes/priceRoutes");
+const { notFound, errorHandler } = require("./middleware/errorHandler");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(morgan("dev"));
+
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok", project: "TounesPrix" });
+});
+
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/stores", storeRoutes);
+app.use("/api/prices", priceRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
+
+module.exports = app;
