@@ -54,10 +54,4 @@ export const storeBestPriceCounts = dashboardStores.map((store) => ({
   count: mockProducts.filter((product) => getBestOffer(product).store === store).length,
 }));
 
-export const adminFormDefaults = {
-  productName: "",
-  storeName: "",
-  priceValue: "",
-};
-
 export { formatPrice };

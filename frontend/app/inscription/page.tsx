@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { useAuth } from "@/contexts/AuthContext";
+import { getApiErrorMessage } from "@/services/api";
 
 type RegisterForm = {
   fullName: string;
@@ -14,6 +17,8 @@ type RegisterForm = {
 };
 
 export default function InscriptionPage() {
+  const router = useRouter();
+  const { register } = useAuth();
   const [form, setForm] = useState<RegisterForm>({
     fullName: "",
     email: "",
@@ -62,15 +67,19 @@ export default function InscriptionPage() {
     if (!validate()) return;
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setLoading(false);
-
-    if (form.email.toLowerCase() === "deja@tounesprix.tn") {
-      setGlobalError("Cette adresse email est deja utilisee.");
-      return;
+    try {
+      const user = await register({
+        name: form.fullName,
+        email: form.email,
+        password: form.password,
+      });
+      setSuccessMessage("Inscription reussie.");
+      router.push(user.role === "admin" ? "/dashboard" : "/");
+    } catch (error) {
+      setGlobalError(getApiErrorMessage(error, "Impossible de creer le compte pour le moment."));
+    } finally {
+      setLoading(false);
     }
-
-    setSuccessMessage("Inscription simulee avec succes.");
   };
 
   return (

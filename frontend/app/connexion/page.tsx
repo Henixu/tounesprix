@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
+import { useAuth } from "@/contexts/AuthContext";
+import { getApiErrorMessage } from "@/services/api";
 
 type LoginForm = {
   email: string;
@@ -12,6 +15,8 @@ type LoginForm = {
 };
 
 export default function ConnexionPage() {
+  const router = useRouter();
+  const { login } = useAuth();
   const [form, setForm] = useState<LoginForm>({ email: "", password: "" });
   const [errors, setErrors] = useState<Partial<LoginForm>>({});
   const [loading, setLoading] = useState(false);
@@ -45,15 +50,15 @@ export default function ConnexionPage() {
     if (!validate()) return;
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setLoading(false);
-
-    if (form.email.toLowerCase() === "error@tounesprix.tn") {
-      setGlobalError("Impossible de se connecter pour le moment. Veuillez reessayer.");
-      return;
+    try {
+      const user = await login({ email: form.email, password: form.password });
+      setSuccessMessage("Connexion reussie.");
+      router.push(user.role === "admin" ? "/dashboard" : "/");
+    } catch (error) {
+      setGlobalError(getApiErrorMessage(error, "Impossible de se connecter pour le moment."));
+    } finally {
+      setLoading(false);
     }
-
-    setSuccessMessage("Connexion simulee avec succes.");
   };
 
   return (

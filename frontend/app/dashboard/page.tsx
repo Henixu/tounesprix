@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { mockCurrentUser } from "@/mock/authData";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Bar,
   BarChart,
@@ -15,12 +15,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { AdminManagement } from "@/components/dashboard/AdminManagement";
 import { AdminSidebar } from "@/components/dashboard/AdminSidebar";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import {
-  adminFormDefaults,
   brandDistribution,
   categoryDistribution,
   formatPrice,
@@ -44,10 +43,8 @@ function StatCard({ title, value, note }: { title: string; value: string; note: 
 }
 
 export default function DashboardPage() {
-  const isAdmin = mockCurrentUser.role === "admin";
-  const [productForm, setProductForm] = useState(adminFormDefaults);
-  const [storeForm, setStoreForm] = useState(adminFormDefaults);
-  const [priceForm, setPriceForm] = useState(adminFormDefaults);
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
 
   const chartMargins = useMemo(() => ({ top: 8, right: 16, left: 0, bottom: 0 }), []);
 
@@ -190,55 +187,7 @@ export default function DashboardPage() {
             </Card>
           </section>
 
-          {isAdmin && (
-            <section className="space-y-4 rounded-2xl border border-line bg-paper p-6">
-              <div className="flex flex-wrap items-center gap-3">
-                <h2 className="font-heading text-2xl font-medium text-ink-950">Gestion</h2>
-                <Badge variant="accent">Admin</Badge>
-              </div>
-              <p className="text-sm text-muted">
-                UI uniquement pour preparer les formulaires de gestion du catalogue.
-              </p>
-
-              <div className="grid gap-5 xl:grid-cols-3">
-                <Card className="rounded-xl border-line bg-paper-muted">
-                  <CardContent className="p-5">
-                    <h3 className="font-heading text-xl font-medium text-ink-950">Ajouter un produit</h3>
-                    <div className="mt-4 space-y-3">
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Nom du produit" value={productForm.productName} onChange={(event) => setProductForm({ ...productForm, productName: event.target.value })} />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Marque" />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Categorie" />
-                      <Button className="w-full">Ajouter un produit</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="rounded-xl border-line bg-paper-muted">
-                  <CardContent className="p-5">
-                    <h3 className="font-heading text-xl font-medium text-ink-950">Ajouter un magasin</h3>
-                    <div className="mt-4 space-y-3">
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Nom du magasin" value={storeForm.storeName} onChange={(event) => setStoreForm({ ...storeForm, storeName: event.target.value })} />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Site web" />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Logo / initiales" />
-                      <Button className="w-full">Ajouter un magasin</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="rounded-xl border-line bg-paper-muted">
-                  <CardContent className="p-5">
-                    <h3 className="font-heading text-xl font-medium text-ink-950">Ajouter un prix</h3>
-                    <div className="mt-4 space-y-3">
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Produit" />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Magasin" value={priceForm.storeName} onChange={(event) => setPriceForm({ ...priceForm, storeName: event.target.value })} />
-                      <input className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm" placeholder="Prix" value={priceForm.priceValue} onChange={(event) => setPriceForm({ ...priceForm, priceValue: event.target.value })} />
-                      <Button className="w-full">Ajouter un prix</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </section>
-          )}
+          {isAdmin && <AdminManagement />}
         </div>
       </div>
     </div>
