@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 import { AdminSidebar } from "@/components/dashboard/AdminSidebar";
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -26,9 +25,6 @@ function StatCard({ title, value, note }: { title: string; value: string; note: 
 }
 
 export default function DashboardPage() {
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
-
   const [overview, setOverview] = useState<StatsOverview | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -57,13 +53,13 @@ export default function DashboardPage() {
   return (
     <div className="px-4 py-12 sm:px-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 lg:flex-row">
-        {isAdmin && <AdminSidebar />}
+        <AdminSidebar />
 
         <div className="flex-1 space-y-8">
           <div>
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="font-heading text-4xl font-medium text-ink-950">Tableau de bord</h1>
-              {isAdmin && <Badge variant="primary">Vue administrateur</Badge>}
+              <Badge variant="primary">Vue administrateur</Badge>
             </div>
             <p className="mt-2 text-sm text-muted">
               Suivi global du catalogue, des marques et des magasins connectes a TounesPrix.

@@ -2,16 +2,12 @@
 
 import { AdminSidebar } from "@/components/dashboard/AdminSidebar";
 import { StatsCharts } from "@/components/dashboard/StatsCharts";
-import { useAuth } from "@/contexts/AuthContext";
 
 export default function DashboardStatsPage() {
-  const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
-
   return (
     <div className="px-4 py-12 sm:px-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 lg:flex-row">
-        {isAdmin && <AdminSidebar />}
+        <AdminSidebar />
 
         <div className="flex-1 space-y-6">
           <div>

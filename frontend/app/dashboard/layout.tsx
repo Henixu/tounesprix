@@ -10,12 +10,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !user) {
+    if (isLoading) return;
+    if (!user) {
       router.replace("/connexion");
+    } else if (user.role !== "admin") {
+      router.replace("/");
     }
   }, [isLoading, user, router]);
 
-  if (isLoading || !user) {
+  if (isLoading || !user || user.role !== "admin") {
     return (
       <div className="flex min-h-[50vh] items-center justify-center px-4 py-16">
         <Loader label="Verification de la session..." />

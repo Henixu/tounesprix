@@ -5,18 +5,21 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 
-const links = [
+const baseLinks = [
   { href: "/", label: "Accueil" },
   { href: "/catalogue", label: "Catalogue" },
   { href: "/comparaison", label: "Comparaison" },
-  { href: "/dashboard", label: "Tableau de bord" },
 ];
+
+const dashboardLink = { href: "/dashboard", label: "Tableau de bord" };
 
 export function Navbar() {
   const { user, isLoading, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isAdmin = user?.role === "admin";
+  const links = isAdmin ? [...baseLinks, dashboardLink] : baseLinks;
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
