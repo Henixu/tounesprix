@@ -3,7 +3,7 @@ const path = require("path");
 
 const Product = require("../models/Product");
 const Price = require("../models/Price");
-const { getBestPrice } = require("../services/priceService");
+const { getBestPrice, getBestPricesForProducts } = require("../services/priceService");
 
 function parseSpecifications(raw) {
   if (!raw) {
@@ -40,12 +40,12 @@ async function getProducts(req, res, next) {
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
 
-    let productsWithBestPrice = await Promise.all(
-      products.map(async (product) => ({
-        ...product.toObject(),
-        bestPrice: await getBestPrice(product._id),
-      })),
-    );
+    const bestPriceMap = await getBestPricesForProducts(products.map((product) => product._id));
+
+    let productsWithBestPrice = products.map((product) => ({
+      ...product.toObject(),
+      bestPrice: bestPriceMap.get(product._id.toString()) || null,
+    }));
 
     if (minPrice !== undefined) {
       const min = Number(minPrice);

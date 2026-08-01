@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
+import { Loader } from "@/components/ui/Loader";
 import { getApiErrorMessage } from "@/services/api";
 import { createPrice, type PricePayload } from "@/services/prices";
 import {
@@ -40,6 +41,7 @@ function MessageBanner({ message }: { message: FormMessage }) {
 export function AdminManagement() {
   const [products, setProducts] = useState<Product[]>([]);
   const [stores, setStores] = useState<Store[]>([]);
+  const [listsLoading, setListsLoading] = useState(true);
   const [listsError, setListsError] = useState("");
 
   const refreshLists = useCallback(async () => {
@@ -54,7 +56,8 @@ export function AdminManagement() {
   }, []);
 
   useEffect(() => {
-    refreshLists();
+    setListsLoading(true);
+    refreshLists().finally(() => setListsLoading(false));
   }, [refreshLists]);
 
   // --- Produits ---
@@ -204,6 +207,11 @@ export function AdminManagement() {
 
       {listsError && <MessageBanner message={{ type: "error", text: listsError }} />}
 
+      {listsLoading ? (
+        <div className="flex min-h-[30vh] items-center justify-center">
+          <Loader label="Chargement des donnees de gestion..." />
+        </div>
+      ) : (
       <div className="grid gap-5 xl:grid-cols-3">
         <Card className="rounded-xl border-line bg-paper-muted">
           <CardContent className="p-5">
@@ -410,6 +418,7 @@ export function AdminManagement() {
           </CardContent>
         </Card>
       </div>
+      )}
     </section>
   );
 }
