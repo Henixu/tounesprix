@@ -63,4 +63,57 @@ async function login(req, res, next) {
   }
 }
 
-module.exports = { register, login };
+async function getUsers(req, res, next) {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function updateUserRole(req, res, next) {
+  try {
+    const { role } = req.body;
+
+    if (!["admin", "user"].includes(role)) {
+      res.status(400);
+      throw new Error("Role invalide");
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404);
+      throw new Error("Utilisateur introuvable");
+    }
+
+    user.role = role;
+    await user.save();
+
+    res.json({ id: user._id, name: user.name, email: user.email, role: user.role });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function deleteUser(req, res, next) {
+  try {
+    if (req.params.id === req.user._id.toString()) {
+      res.status(400);
+      throw new Error("Vous ne pouvez pas supprimer votre propre compte");
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404);
+      throw new Error("Utilisateur introuvable");
+    }
+
+    await user.deleteOne();
+    res.json({ message: "Utilisateur supprime" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { register, login, getUsers, updateUserRole, deleteUser };
