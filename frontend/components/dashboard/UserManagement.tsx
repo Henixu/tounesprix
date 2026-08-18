@@ -124,7 +124,7 @@ export function UserManagement() {
                             type="button"
                             disabled={isSelf || isPending}
                             onClick={() => handleDelete(item)}
-                            className="text-xs font-semibold text-red-700 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="text-xs font-semibold text-red-700 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-red-400 dark:hover:text-red-300"
                           >
                             Supprimer
                           </button>

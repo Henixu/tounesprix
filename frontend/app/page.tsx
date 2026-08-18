@@ -10,21 +10,21 @@ export default function Home() {
     <div className="pb-20">
       <section className="hero-ledger px-4 pb-24 pt-20 sm:px-8">
         <div className="relative mx-auto max-w-6xl">
-          <Badge variant="primary" className="mb-6 border-brass-500/40 bg-transparent text-brass-300">
+          <Badge variant="primary" className="mb-6 border-brass-fixed/40 bg-transparent text-brass-fixed">
             Comparateur — Tunisie
           </Badge>
-          <h1 className="max-w-3xl font-heading text-4xl font-medium italic leading-[1.1] text-paper md:text-6xl">
+          <h1 className="max-w-3xl font-heading text-4xl font-medium italic leading-[1.1] text-paper-fixed md:text-6xl">
             Le juste prix du materiel informatique en Tunisie
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-paper-muted/80 md:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-paper-fixed/70 md:text-lg">
             Un releve clair des prix pratiques par les principales boutiques tech du pays, mis a jour en continu.
           </p>
           <div className="mt-9 flex max-w-2xl flex-col gap-3 rounded-xl border border-white/15 bg-white/5 p-2 sm:flex-row">
             <Input
               placeholder="Rechercher un produit, une marque ou une categorie"
-              className="h-12 border-0 bg-paper text-ink-950"
+              className="h-12 border-0 bg-paper-fixed text-ink-fixed"
             />
-            <Button className="h-12 rounded-lg bg-brass-600 px-6 font-semibold text-ink-950 hover:bg-brass-500">
+            <Button className="h-12 rounded-lg bg-brass-600 px-6 font-semibold text-ink-fixed hover:bg-brass-500">
               Comparer
             </Button>
           </div>

@@ -233,7 +233,7 @@ export function ProductManagement() {
                         </button>
                         <button
                           type="button"
-                          className="text-xs font-semibold text-red-700 hover:text-red-600"
+                          className="text-xs font-semibold text-red-700 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
                           onClick={() => handleDeleteProduct(product)}
                         >
                           Supprimer

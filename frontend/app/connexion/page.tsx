@@ -80,7 +80,7 @@ export default function ConnexionPage() {
                   onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
                   placeholder="vous@email.com"
                 />
-                {errors.email && <p className="mt-1 text-xs text-red-700">{errors.email}</p>}
+                {errors.email && <p className="mt-1 text-xs text-red-700 dark:text-red-400">{errors.email}</p>}
               </div>
 
               <div>
@@ -91,11 +91,19 @@ export default function ConnexionPage() {
                   onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
                   placeholder="******"
                 />
-                {errors.password && <p className="mt-1 text-xs text-red-700">{errors.password}</p>}
+                {errors.password && <p className="mt-1 text-xs text-red-700 dark:text-red-400">{errors.password}</p>}
               </div>
 
-              {globalError && <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{globalError}</p>}
-              {successMessage && <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700">{successMessage}</p>}
+              {globalError && (
+                <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-500/10 dark:text-red-400">
+                  {globalError}
+                </p>
+              )}
+              {successMessage && (
+                <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                  {successMessage}
+                </p>
+              )}
 
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Connexion en cours..." : "Se connecter"}

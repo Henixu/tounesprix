@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/contexts/AuthContext";
 
 const baseLinks = [
@@ -55,46 +56,50 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex">
-          {!isLoading && user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-ink-700">{user.name}</span>
-              <button
-                type="button"
-                onClick={handleLogout}
+        <div className="flex items-center gap-3">
+          <div className="hidden md:flex">
+            {!isLoading && user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-ink-700">{user.name}</span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="rounded-md border border-ink-900 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:bg-ink-950 hover:text-paper"
+                >
+                  Deconnexion
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/connexion"
                 className="rounded-md border border-ink-900 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:bg-ink-950 hover:text-paper"
               >
-                Deconnexion
-              </button>
-            </div>
-          ) : (
-            <Link
-              href="/connexion"
-              className="rounded-md border border-ink-900 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-ink-900 transition-colors hover:bg-ink-950 hover:text-paper"
-            >
-              Connexion
-            </Link>
-          )}
-        </div>
+                Connexion
+              </Link>
+            )}
+          </div>
 
-        <button
-          type="button"
-          onClick={() => setIsMobileMenuOpen((current) => !current)}
-          aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-          className="flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink-900 md:hidden"
-        >
-          <span className="sr-only">Menu</span>
-          {isMobileMenuOpen ? (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          )}
-        </button>
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen((current) => !current)}
+            aria-expanded={isMobileMenuOpen}
+            aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            className="flex h-10 w-10 items-center justify-center rounded-md border border-line text-ink-900 md:hidden"
+          >
+            <span className="sr-only">Menu</span>
+            {isMobileMenuOpen ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {isMobileMenuOpen && (

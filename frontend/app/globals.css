@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Enables class-based dark mode: `dark:` utilities respond to a `.dark`
+   class on any ancestor (set by ThemeProvider), not just OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #eef1f6;
   --foreground: #101828;
@@ -20,6 +24,36 @@
   --brass-100: #f0e4c8;
 
   --muted: #5c6472;
+
+  /* Fixed tokens: identical in both themes. Reserved for the two
+     intentionally-always-dark accent bands (hero, footer) and for text
+     rendered on top of the brass accent color, so those spots never lose
+     contrast regardless of which theme is active. */
+  --ink-fixed: #0a1322;
+  --paper-fixed: #f5f7fb;
+  --brass-fixed: #dcc17f;
+}
+
+:root.dark {
+  --background: #0f1729;
+  --foreground: #e8edf6;
+
+  --ink-950: #f5f7fb;
+  --ink-900: #dde3ee;
+  --ink-800: #b7c2d6;
+  --ink-700: #8fa0ba;
+
+  --paper: #16213a;
+  --paper-muted: #1c2942;
+  --line: #2b3a58;
+
+  --brass-700: #eecb8c;
+  --brass-600: #d6ac5c;
+  --brass-500: #c2953f;
+  --brass-300: #6b5226;
+  --brass-100: #2c2311;
+
+  --muted: #93a1b8;
 }
 
 @theme inline {
@@ -43,6 +77,10 @@
 
   --color-muted: var(--muted);
 
+  --color-ink-fixed: var(--ink-fixed);
+  --color-paper-fixed: var(--paper-fixed);
+  --color-brass-fixed: var(--brass-fixed);
+
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
@@ -53,6 +91,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .font-heading {
@@ -66,10 +105,12 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Hero: encre marine, fine trame de lignes evoquant une grille de comparatif, pas de degrade criard */
+/* Hero: encre marine, fine trame de lignes evoquant une grille de comparatif, pas de degrade criard.
+   Uses the fixed (non-theme-swapping) ink so the band stays a deliberate dark
+   accent regardless of light/dark mode. */
 .hero-ledger {
   position: relative;
-  background: var(--ink-950);
+  background: var(--ink-fixed);
   overflow: hidden;
 }
 .hero-ledger::before {

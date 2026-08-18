@@ -30,7 +30,16 @@ import {
   type CategoryStat,
 } from "@/services/stats";
 
-const brandColors = ["#7c5e21", "#a3792c", "#b98f3f", "#17293f", "#223752", "#5c6472"];
+// CSS var() references (not literal hex) so the chart palette follows the
+// active theme automatically — Recharts/SVG accept any valid CSS color string.
+const brandColors = [
+  "var(--brass-700)",
+  "var(--brass-600)",
+  "var(--brass-500)",
+  "var(--ink-800)",
+  "var(--ink-700)",
+  "var(--muted)",
+];
 
 function buildEvolutionChartData(prices: Price[]) {
   const byDate = new Map<string, Record<string, number>>();
@@ -175,9 +184,9 @@ export function StatsCharts() {
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={evolutionData} margin={chartMargins}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#dde2ea" />
-                  <XAxis dataKey="date" tickLine={false} axisLine={{ stroke: "#dde2ea" }} />
-                  <YAxis tickLine={false} axisLine={{ stroke: "#dde2ea" }} width={42} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" />
+                  <XAxis dataKey="date" tickLine={false} axisLine={{ stroke: "var(--line)" }} />
+                  <YAxis tickLine={false} axisLine={{ stroke: "var(--line)" }} width={42} />
                   {storeNames.map((storeName, index) => (
                     <Line
                       key={storeName}
@@ -204,19 +213,19 @@ export function StatsCharts() {
           <div className="mt-4 h-96">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={categoryDistribution} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#dde2ea" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" />
                 <XAxis
                   dataKey="category"
                   tickLine={false}
-                  axisLine={{ stroke: "#dde2ea" }}
+                  axisLine={{ stroke: "var(--line)" }}
                   interval={0}
                   angle={-45}
                   textAnchor="end"
                   height={110}
                   tick={{ fontSize: 12 }}
                 />
-                <YAxis tickLine={false} axisLine={{ stroke: "#dde2ea" }} allowDecimals={false} />
-                <Bar dataKey="count" fill="#a3792c" radius={[8, 8, 0, 0]} />
+                <YAxis tickLine={false} axisLine={{ stroke: "var(--line)" }} allowDecimals={false} />
+                <Bar dataKey="count" fill="var(--brass-600)" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -269,10 +278,10 @@ export function StatsCharts() {
                 }))}
                 margin={chartMargins}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#dde2ea" />
-                <XAxis dataKey="store" tickLine={false} axisLine={{ stroke: "#dde2ea" }} />
-                <YAxis tickLine={false} axisLine={{ stroke: "#dde2ea" }} allowDecimals={false} />
-                <Bar dataKey="count" fill="#17293f" radius={[8, 8, 0, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" />
+                <XAxis dataKey="store" tickLine={false} axisLine={{ stroke: "var(--line)" }} />
+                <YAxis tickLine={false} axisLine={{ stroke: "var(--line)" }} allowDecimals={false} />
+                <Bar dataKey="count" fill="var(--ink-800)" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

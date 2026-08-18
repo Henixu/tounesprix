@@ -117,7 +117,7 @@ export function StoreManagement() {
                     <span className="truncate text-ink-900">{store.name}</span>
                     <button
                       type="button"
-                      className="shrink-0 text-xs font-semibold text-red-700 hover:text-red-600"
+                      className="shrink-0 text-xs font-semibold text-red-700 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
                       onClick={() => handleDeleteStore(store)}
                     >
                       Supprimer
