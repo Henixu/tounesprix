@@ -16,6 +16,10 @@ const priceSchema = new mongoose.Schema({
     required: [true, "Le prix est obligatoire"],
     min: 0,
   },
+  url: {
+    type: String,
+    default: "",
+  },
   date: {
     type: Date,
     default: Date.now,

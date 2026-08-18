@@ -1,6 +1,20 @@
 import { api } from "@/services/api";
 import type { Price } from "@/services/prices";
 
+// api.baseURL points at ".../api", but uploaded product images are served
+// from the backend root (see backend/app.js: app.use("/uploads", ...)).
+const BACKEND_ROOT = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000/api").replace(/\/api\/?$/, "");
+
+// Product.image is either an absolute URL scraped from a retailer's site
+// (spacenet.tn, mytek.tn, tunisianet.com.tn, ...) or a relative "/uploads/..."
+// path for admin-uploaded images. Resolve the relative case against the
+// backend root so both render correctly.
+export function resolveImageUrl(image: string | undefined | null) {
+  if (!image) return "";
+  if (/^https?:\/\//i.test(image)) return image;
+  return `${BACKEND_ROOT}${image.startsWith("/") ? "" : "/"}${image}`;
+}
+
 export type Product = {
   _id: string;
   name: string;

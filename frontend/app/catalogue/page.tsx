@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Loader } from "@/components/ui/Loader";
+import { ProductThumbnail } from "@/components/ui/ProductThumbnail";
 import { useDebounce } from "@/hooks/useDebounce";
 import { getApiErrorMessage } from "@/services/api";
 import { getProducts, type Product } from "@/services/products";
@@ -255,9 +256,7 @@ function CatalogueContent() {
                     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
                       {currentPageProducts.map((product) => (
                         <Card key={product._id} className="overflow-hidden rounded-xl border-line bg-paper">
-                          <div className="flex h-40 items-center justify-center border-b border-line bg-paper-muted text-xs uppercase tracking-wide text-muted">
-                            {product.category}
-                          </div>
+                          <ProductThumbnail image={product.image} alt={product.name} label={product.category} className="h-40" />
                           <CardContent className="p-5">
                             <p className="line-clamp-2 min-h-10 text-sm font-semibold text-ink-950">{product.name}</p>
                             <p className="mt-1 text-xs uppercase tracking-wide text-muted">{product.brand}</p>

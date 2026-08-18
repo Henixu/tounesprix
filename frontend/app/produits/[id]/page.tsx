@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Loader } from "@/components/ui/Loader";
+import { ProductThumbnail } from "@/components/ui/ProductThumbnail";
 import { getApiErrorMessage } from "@/services/api";
 import { getProductById, getProducts, type Product, type ProductDetails } from "@/services/products";
 
@@ -85,9 +86,7 @@ export default function ProductDetailsPage() {
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <Card className="overflow-hidden rounded-xl border-line bg-paper">
-            <div className="flex h-72 items-center justify-center border-b border-line bg-paper-muted text-xs uppercase tracking-wide text-muted">
-              {product.category}
-            </div>
+            <ProductThumbnail image={product.image} alt={product.name} label={product.category} className="h-72" />
             <CardContent className="p-6">
               <div className="flex flex-wrap items-center gap-3">
                 <Badge variant="neutral">{product.brand}</Badge>
@@ -184,7 +183,8 @@ export default function ProductDetailsPage() {
             <h2 className="font-heading text-2xl font-medium text-ink-950">Produits similaires</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {similarProducts.map((item) => (
-                <Card key={item._id} className="rounded-xl border-line bg-paper">
+                <Card key={item._id} className="overflow-hidden rounded-xl border-line bg-paper">
+                  <ProductThumbnail image={item.image} alt={item.name} label={item.category} className="h-28" />
                   <CardContent className="p-4">
                     <p className="line-clamp-2 min-h-10 text-sm font-semibold text-ink-950">{item.name}</p>
                     <p className="mt-1 text-xs uppercase tracking-wide text-muted">{item.brand}</p>
