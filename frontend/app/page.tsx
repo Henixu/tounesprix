@@ -3,9 +3,20 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { categories, featuredProducts } from "@/mock/products";
+import { ProductThumbnail } from "@/components/ui/ProductThumbnail";
+import { categories } from "@/mock/products";
+import { getProducts } from "@/services/products";
 
-export default function Home() {
+function formatPrice(price: number) {
+  return `${price.toLocaleString("fr-FR")} TND`;
+}
+
+export default async function Home() {
+  const allProducts = await getProducts().catch(() => []);
+  // Prefer products with a real photo so the homepage doesn't look empty.
+  const withImage = allProducts.filter((product) => product.image);
+  const featuredProducts = (withImage.length >= 8 ? withImage : allProducts).slice(0, 8);
+
   return (
     <div className="pb-20">
       <section className="hero-ledger px-4 pb-24 pt-20 sm:px-8">
@@ -58,29 +69,44 @@ export default function Home() {
           <div className="mb-7 border-b border-line pb-4">
             <h2 className="font-heading text-2xl font-medium text-ink-950">Produits en vedette</h2>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden rounded-lg border-line bg-paper">
-                <div className="flex h-36 items-center justify-center border-b border-line bg-paper-muted text-xs font-medium uppercase tracking-wide text-muted">
-                  Image
-                </div>
-                <CardContent className="space-y-1 p-5">
-                  <p className="line-clamp-2 min-h-10 text-sm font-semibold text-ink-950">{product.name}</p>
-                  <p className="text-xs uppercase tracking-wide text-muted">{product.brand}</p>
+          {featuredProducts.length === 0 ? (
+            <p className="text-sm text-muted">Aucun produit disponible pour le moment.</p>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {featuredProducts.map((product) => (
+                <Card key={product._id} className="overflow-hidden rounded-lg border-line bg-paper">
+                  <ProductThumbnail image={product.image} alt={product.name} label={product.category} className="h-36" />
+                  <CardContent className="space-y-1 p-5">
+                    <p className="line-clamp-2 min-h-10 text-sm font-semibold text-ink-950">{product.name}</p>
+                    <p className="text-xs uppercase tracking-wide text-muted">{product.brand}</p>
 
-                  <div className="price-ticket">
-                    <span className="stamp" />
-                    <p className="font-mono-tab text-lg font-semibold text-ink-950">{product.lowestPrice}</p>
-                    <span className="ml-auto text-[11px] uppercase tracking-wide text-brass-600">{product.store}</span>
-                  </div>
+                    {product.bestPrice ? (
+                      <div className="price-ticket">
+                        <span className="stamp" />
+                        <p className="font-mono-tab text-lg font-semibold text-ink-950">
+                          {formatPrice(product.bestPrice.price)}
+                        </p>
+                        <span className="ml-auto text-[11px] uppercase tracking-wide text-brass-600">
+                          {product.bestPrice.storeId?.name ?? "Magasin"}
+                        </span>
+                      </div>
+                    ) : (
+                      <p className="price-ticket text-xs text-muted">Aucun prix disponible</p>
+                    )}
 
-                  <Button variant="outline" className="mt-3 w-full rounded-md border-ink-900 text-ink-900 hover:bg-ink-950 hover:text-paper">
-                    Comparer
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    <Link href={`/comparaison?add=${product._id}`} className="mt-3 block">
+                      <Button
+                        variant="outline"
+                        className="w-full rounded-md border-ink-900 text-ink-900 hover:bg-ink-950 hover:text-paper"
+                      >
+                        Comparer
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
